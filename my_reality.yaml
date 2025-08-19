@@ -1,0 +1,30 @@
+port: 7890
+socks-port: 7891
+allow-lan: false
+mode: Rule
+log-level: info
+external-controller: 127.0.0.1:9090
+
+proxies:
+  - name: "My-Reality"
+    type: vless
+    server: 47.129.243.137
+    port: 443
+    uuid: d5c950f7-2643-4e5e-a0f7-c9a7dd70e931
+    flow: xtls-rprx-vision
+    security: reality
+    sni: www.cloudflare.com
+    fp: chrome
+    pbk: cRQ3gTTs2qESV4QMPdyrkRvy34i69Vp83LvApbj4AG4
+    short-id: 0123456789abcdef
+    network: tcp
+
+proxy-groups:
+  - name: "Auto"
+    type: select
+    proxies:
+      - "My-Reality"
+
+rules:
+  - GEOIP,CN,DIRECT
+  - MATCH,Auto
